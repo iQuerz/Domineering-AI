@@ -29,9 +29,9 @@ class Game:
                 rect = (col * SQSIZE, row * SQSIZE, SQSIZE, SQSIZE)  
                 
                 pygame.draw.rect(surface, color, rect) 
-                if field[row][col] == 1:
+                if field[row][col][0] == 1:
                     surface.blit(self.PlayerOneImg, pygame.Rect(col*SQSIZE,(row-1)*SQSIZE,SQSIZE,2*SQSIZE))
-                elif field[row][col] == 2:
+                elif field[row][col][0] == 2:
                     surface.blit(self.PlayerTwoImg, pygame.Rect((col-1)*SQSIZE,row*SQSIZE,2*SQSIZE,SQSIZE))
 
                 

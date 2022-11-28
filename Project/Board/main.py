@@ -58,4 +58,4 @@ class Main:
             pygame.display.update()  
 
 main = Main()
-main.mainLoop()    
+main.mainLoop()
