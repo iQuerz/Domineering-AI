@@ -8,8 +8,8 @@ from square import Square
 
 class Game:
 
-    PlayerOneImg = pygame.transform.scale(pygame.image.load("Board/images/player_1.png"),(SQSIZE,(SQSIZE*2)))
-    PlayerTwoImg = pygame.transform.scale(pygame.image.load("Board/images/player_2.png"),((SQSIZE*2),SQSIZE))
+    PlayerOneImg = pygame.transform.scale(pygame.image.load("images/player_1.png"),(SQSIZE,(SQSIZE*2)))
+    PlayerTwoImg = pygame.transform.scale(pygame.image.load("images/player_2.png"),((SQSIZE*2),SQSIZE))
 
     def __init__(self):
         self.next_player = 1
