@@ -1,6 +1,6 @@
 #imports
 import AI
-import UserInterface
+import UserInterface as UserInterface
 
 
 #trenutno ima duplikati svih funkcija za svakog igraca jer mi bilo lakse tako da testiram 
@@ -42,8 +42,8 @@ def CalcAvalaibleMovesPlayerTwo(Mat):
 
 def PlayerOneMove(a : int,b : int, Mat):
     if IsMoveValidOne(a,b,Mat):
-        Mat[a - 1][b] = 1
-        Mat[a][b] = 1  
+        Mat[a - 1][b] = -1
+        Mat[a][b] = 1
         PrintField(Mat)
     else:
         print("Invalide move")
@@ -54,7 +54,7 @@ def PlayerOneMove(a : int,b : int, Mat):
 
 def PlayerTwoMove(a : int,b : int, Mat):
     if Mat[a][b+1] == 0 and Mat[a][b] == 0 and a < len(Mat[0]):
-        Mat[a][b] = 2
+        Mat[a][b] = -2
         Mat[a][b+1] = 2
         PrintField(Mat)
     else:
@@ -69,11 +69,13 @@ def PrintField(Field):
         print(Field[x])
     print("----------------")
 
+
 #primer igre
-Field = CreateMatrix(3,3)
-PrintField(Field)
-PlayerOneMove(1,0,Field)
-PlayerTwoMove(2,0,Field)
-PlayerOneMove(1,1,Field)
+
+#Field = CreateMatrix(3,3)
+#PrintField(Field)
+#PlayerOneMove(1,0,Field)
+#PlayerTwoMove(2,0,Field)
+#PlayerOneMove(1,1,Field)
 
 #status data
