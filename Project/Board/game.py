@@ -31,8 +31,8 @@ class Game:
                 pygame.draw.rect(surface, color, rect) 
                 if field[row][col] == 1:
                     surface.blit(self.PlayerOneImg, pygame.Rect(col*SQSIZE,(row-1)*SQSIZE,SQSIZE,2*SQSIZE))
-                elif field[col][row] == 2:
-                    surface.blit(self.PlayerTwoImg, pygame.Rect(row*SQSIZE,col*SQSIZE,2*SQSIZE,SQSIZE))
+                elif field[row][col] == 2:
+                    surface.blit(self.PlayerTwoImg, pygame.Rect((col-1)*SQSIZE,row*SQSIZE,2*SQSIZE,SQSIZE))
 
                 
       

@@ -2,7 +2,7 @@
 import AI
 import UserInterface as UserInterface
 
-
+CountMove = 0
 #trenutno ima duplikati svih funkcija za svakog igraca jer mi bilo lakse tako da testiram 
 def CreateMatrix(M: int, N: int):
     Matrix = [[0 for x in range(M)] for y in range(N)]
@@ -15,7 +15,9 @@ def IsMoveValidOne(a : int,b : int, Mat):
         return False
 
 def IsMoveValidTwo(a : int,b : int, Mat):
-    if Mat[a][b+1] == 0 and Mat[a][b] == 0 and b < len(Mat[0]):
+    if b >= len(Mat[0])-1:
+        return False
+    if Mat[a][b+1] == 0 and Mat[a][b] == 0:
         return True
     else:
         return False
@@ -42,27 +44,37 @@ def CalcAvalaibleMovesPlayerTwo(Mat):
 
 def PlayerOneMove(a : int,b : int, Mat):
     if IsMoveValidOne(a,b,Mat):
+        global CountMove
         Mat[a - 1][b] = -1
         Mat[a][b] = 1
+        CountMove+=1
         PrintField(Mat)
+        if CalcAvalaibleMovesPlayerTwo(Mat) == 0:
+            print("Player one wins")
+        else:
+            print("Available moves for player Two :" , CalcAvalaibleMovesPlayerTwo(Mat))
+        return True
     else:
         print("Invalide move")
-    if CalcAvalaibleMovesPlayerTwo(Mat) == 0:
-        print("Player one wins")
-    else:
-        print("Available moves for player Two :" , CalcAvalaibleMovesPlayerTwo(Mat))
+        return False
+
 
 def PlayerTwoMove(a : int,b : int, Mat):
-    if Mat[a][b+1] == 0 and Mat[a][b] == 0 and a < len(Mat[0]):
+    if IsMoveValidTwo(a,b,Mat):
+        global CountMove
         Mat[a][b] = -2
         Mat[a][b+1] = 2
+        CountMove+=1
         PrintField(Mat)
+        if CalcAvalaibleMovesPlayerOne(Mat) == 0:
+            print("Player two wins")
+        else:
+            print("Available moves for player One :" , CalcAvalaibleMovesPlayerOne(Mat))
+        return True
     else:
         print("Invalide move")
-    if CalcAvalaibleMovesPlayerOne(Mat) == 0:
-        print("Player two wins")
-    else:
-        print("Available moves for player One :" , CalcAvalaibleMovesPlayerOne(Mat))
+        return False
+
 
 def PrintField(Field):
     for x in range(len(Field)):

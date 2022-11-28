@@ -17,8 +17,10 @@ class Main:
         display_surface = pygame.display.set_mode((WIDTH, HEIGHT))
         screen = self.screen
         game = self.game
+        GameState = True
 
         while True:
+            
             # show methods
             game.show_bg(screen, Field)
            #game.show_text(display_surface)
@@ -37,15 +39,21 @@ class Main:
                     pygame.quit()
                     sys.exit()
                 elif event.type == pygame.MOUSEBUTTONUP:
-                    location = pygame.mouse.get_pos()
-                    x = location[0]//SQSIZE
-                    y = location[1]//SQSIZE
-                    GameEngine.PlayerOneMove(y,x, Field)
-                elif event.type == pygame.K_l:
-                    location = pygame.mouse.get_pos()
-                    x = location[0]//SQSIZE
-                    y = location[1]//SQSIZE
-                    GameEngine.PlayerTwoMove(y,x, Field)
+                    if GameState == True:
+                        location = pygame.mouse.get_pos()
+                        x = location[0]//SQSIZE
+                        y = location[1]//SQSIZE
+                        Change = GameEngine.PlayerOneMove(y,x, Field)
+                        if Change:
+                                GameState = False
+                    else:
+                        location = pygame.mouse.get_pos()
+                        x = location[0]//SQSIZE
+                        y = location[1]//SQSIZE
+                        Change = GameEngine.PlayerTwoMove(y,x, Field)
+                        if Change:
+                                GameState = True
+
 
             pygame.display.update()  
 
