@@ -28,7 +28,6 @@ class Main:
             for event in pygame.event.get():  
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     location = pygame.mouse.get_pos()
-                    print(location)
                     col = location[0]//SQSIZE # x koordinata pozicije klika
                     row = location[1]//SQSIZE # y koordinata pozicije klika
 
@@ -53,8 +52,15 @@ class Main:
                     pygame.quit()
                     sys.exit()
 
-                          
-            #pygame.display.set_caption('Winner is: Player' + )
+            
+            #ovo se uvek izvrsava nma nikakv if samo se vidi ko je na potez
+            location = pygame.mouse.get_pos()
+            col = location[0]//SQSIZE
+            row = location[1]//SQSIZE
+            if GameState == True:
+                game.HoverPlayerOne(row, col, Field, screen)
+            else:
+                game.HoverPlayerTwo(row, col, Field, screen)
             pygame.display.update()
 
 main = Main()
