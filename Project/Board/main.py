@@ -57,7 +57,15 @@ class Main:
                     pygame.quit()
                     sys.exit()
 
-                          
+            
+            #ovo se uvek izvrsava nma nikakv if samo se vidi ko je na potez
+            location = pygame.mouse.get_pos()
+            x = location[0]//SQSIZE
+            y = location[1]//SQSIZE
+            if GameState == True:
+                game.HoverPlayerOne(x,y,Field,screen)
+            else:
+                game.HoverPlayerTwo(x,y,Field,screen)         
             #pygame.display.set_caption('Winner is: Player' + )
             pygame.display.update()  
 

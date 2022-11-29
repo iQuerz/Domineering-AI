@@ -1,11 +1,14 @@
 #deo koda preuzet sa https://github.com/AlejoG10/python-chess-ai-yt
 import pygame
+import GameEngine
 from const import *
 
 class Game:
 
     PlayerOneImg = pygame.transform.scale(pygame.image.load("images/player_1.png"),(SQSIZE,(SQSIZE*2)))
     PlayerTwoImg = pygame.transform.scale(pygame.image.load("images/player_2.png"),((SQSIZE*2),SQSIZE))
+    black = (0, 0, 0)
+    white = (255, 255, 255)
 
     def __init__(self):
         pass
@@ -27,11 +30,33 @@ class Game:
                 
                 pygame.draw.rect(surface, color, rect) 
                 if field[row][col][0] == 1:
+                    #Figura
                     surface.blit(self.PlayerOneImg, pygame.Rect(col*SQSIZE,(row-1)*SQSIZE,SQSIZE,2*SQSIZE))
+                    #Font
+                    font = pygame.font.Font('freesansbold.ttf', 18)
+                    text = str(field[row][col][1])
+                    text = font.render(text, True, self.white )
+                    textRect = text.get_rect()
+                    textRect.center = ((col*SQSIZE)+(SQSIZE//2),((row-1)*SQSIZE)+SQSIZE)
+                    surface.blit(text, textRect)
                 elif field[row][col][0] == 2:
                     surface.blit(self.PlayerTwoImg, pygame.Rect((col-1)*SQSIZE,row*SQSIZE,2*SQSIZE,SQSIZE))
+                    font = pygame.font.Font('freesansbold.ttf', 18)
+                    text = str(field[row][col][1])
+                    text = font.render(text, True, self.white)
+                    textRect = text.get_rect()
+                    textRect.center = ((col*SQSIZE),((row-1)*SQSIZE)+(SQSIZE*1.5))
+                    surface.blit(text, textRect)
 
-    
+    def HoverPlayerOne(self, y: int,x : int, field, surface):
+        if GameEngine.IsMoveValidOne(x,y,field):
+           surface.blit(self.PlayerOneImg, pygame.Rect(y*SQSIZE,(x-1)*SQSIZE,SQSIZE,2*SQSIZE)) 
+
+    def HoverPlayerTwo(self, y: int,x : int, field, surface):
+        if GameEngine.IsMoveValidTwo(x,y,field):
+            surface.blit(self.PlayerTwoImg, pygame.Rect((y)*SQSIZE,x*SQSIZE,2*SQSIZE,SQSIZE))
+
+
     def show_winner(self, surface): #ispisivanje ko je pobednik
                                        
         white = (255, 255, 255)
