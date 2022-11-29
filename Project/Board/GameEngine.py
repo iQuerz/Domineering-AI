@@ -1,11 +1,12 @@
 #imports
 import pygame
+from const import *
 import AI
 import UserInterface as UserInterface
 from game import Game
-from tkinter import *
-from tkinter import messagebox
-
+from tkinter import *  
+from tkinter import messagebox  
+    
 CountMove = 0
 #trenutno ima duplikati svih funkcija za svakog igraca jer mi bilo lakse tako da testiram 
 def CreateMatrix(rows: int, cols: int):
@@ -45,7 +46,7 @@ def CalcAvalaibleMovesPlayerTwo(Mat):
             if IsMoveValidTwo(x,i,Mat):
                 count+=1
     return count
-
+    
 def PlayerOneMove(rows : int, cols : int, Mat):
     if IsMoveValidOne(rows,cols,Mat):
         global CountMove
@@ -54,17 +55,16 @@ def PlayerOneMove(rows : int, cols : int, Mat):
         CountMove+=1
         PrintField(Mat)
         if CalcAvalaibleMovesPlayerTwo(Mat) == 0:
-            print("Player one wins")
-            Tk().wm_withdraw()
-            messagebox.showinfo('Domineering','Player one wins')
+            print("Player one wins") 
+            Tk().wm_withdraw()          
+            messagebox.showinfo('Domineering','Player one wins')           
         else:
-            print("Available moves for player Two :" , CalcAvalaibleMovesPlayerTwo(Mat))
-        return True
+            print("Available moves for player Two:", CalcAvalaibleMovesPlayerTwo(Mat))
+        return True    
     else:
         pygame.display.set_caption('INVALID MOVE - try again') #stampa u zaglavlju
         print("Invalid move")
         return False
-
 
 def PlayerTwoMove(rows : int, cols : int, Mat):
     if IsMoveValidTwo(rows,cols,Mat):
@@ -74,15 +74,15 @@ def PlayerTwoMove(rows : int, cols : int, Mat):
         CountMove+=1
         PrintField(Mat)
         if CalcAvalaibleMovesPlayerOne(Mat) == 0:
-            print("Player two wins")
-            Tk().wm_withdraw()
-            messagebox.showinfo('Domineering','Player two wins')
-            
+            print("Player two wins")  
+            Tk().wm_withdraw()         
+            messagebox.showinfo('Domineering','Player two wins')         
         else:
-            print("Available moves for player One :" , CalcAvalaibleMovesPlayerOne(Mat))
+            print("Available moves for player One:", CalcAvalaibleMovesPlayerOne(Mat))
         return True
     else:
         pygame.display.set_caption('INVALID MOVE - try again') #stampa u zaglavlju
+        pygame.display.quit
         print("Invalid move")
         return False
 
@@ -91,7 +91,35 @@ def PrintField(Field):
         print(Field[x])
     print("----------------")
 
+def show_winner(surface, player): #ispisivanje ko je pobednik
+                                       
+        white = (255, 255, 255)
+        black = (0, 0, 0)
 
+        # create a font object.
+        # 1st parameter is the font file
+        # which is present in pygame.
+        # 2nd parameter is size of the font
+        font = pygame.font.Font('freesansbold.ttf', 28)
+        # create a text surface object,
+        # on which text is drawn on it.
+        text = font.render('Player ' + player + ' wins', True, black, white)
+         
+        # create a rectangular object for the
+        # text surface object
+        textRect = text.get_rect()
+        
+        # set the center of the rectangular object.
+        textRect.center = (WIDTH // 2, HEIGHT // 2.2)
+        
+        # completely fill the surface object
+        # with white color
+              
+        # copying the text surface object
+        # to the display surface object
+        # at the center coordinate.
+        surface.blit(text, textRect) 
+        
 #primer igre
 
 #Field = CreateMatrix(3,3)

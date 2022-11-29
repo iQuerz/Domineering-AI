@@ -1,6 +1,6 @@
 import pygame, sys
 import GameEngine
-from GameEngine import IsMoveValidOne, IsMoveValidTwo
+from GameEngine import *
 from const import *
 from game import Game
 
@@ -32,26 +32,25 @@ class Main:
                     row = location[1]//SQSIZE # y koordinata pozicije klika
 
                     if GameState == True:
-                        if GameEngine.PlayerOneMove(row,col, Field):
+                        if GameEngine.PlayerOneMove(row,col,Field):
                             pygame.display.set_caption('Player 2 is on the move') #when state changes other player is on the move
                             GameState = False
                     else:
-                        if GameEngine.PlayerTwoMove(row,col, Field):
+                        if GameEngine.PlayerTwoMove(row,col,Field):
                             pygame.display.set_caption('Player 1 is on the move') #when state changes other player is on the move
                             GameState = True
-
-                # key press
+                #keypress
                 elif event.type == pygame.KEYDOWN:
-                     # reseting a game
-                    if event.key == pygame.K_r: #ako se klikne R resetuje se igrica
-                        game.reset()
-                        game = self.game
-                
-                # quit application
+
+                     # reseting game
+                    if event.key == pygame.K_r:
+                        main.mainLoop()
+                    
+                    game.show_bg(screen, Field)
+                        
                 elif event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-
             
             #ovo se uvek izvrsava nma nikakv if samo se vidi ko je na potez
             location = pygame.mouse.get_pos()
@@ -61,7 +60,13 @@ class Main:
                 game.HoverPlayerOne(row, col, Field, screen)
             else:
                 game.HoverPlayerTwo(row, col, Field, screen)
+  
             pygame.display.update()
-
+            
+            if GameEngine.CalcAvalaibleMovesPlayerOne(Field) == 0:
+                show_winner(screen, '2')
+            else:
+                show_winner(screen, '1')              
+               
 main = Main()
 main.mainLoop()

@@ -27,7 +27,7 @@ class Game:
 
                 #Font
                 font = pygame.font.Font('freesansbold.ttf', 18)
-                text = str(field[row][col][1])
+                text = str(field[row][col][1]+1)
                 text = font.render(text, True, self.white)
                 textRect = text.get_rect()
 
@@ -40,7 +40,6 @@ class Game:
                     textRect.center = ((col*SQSIZE), ((row-1)*SQSIZE)+(SQSIZE*1.5))
                     surface.blit(text, textRect)
 
-
     def HoverPlayerOne(self, rows:int, cols:int, field, surface):
         if GameEngine.IsMoveValidOne(rows, cols, field):
            surface.blit(self.PlayerOneImg, pygame.Rect(cols*SQSIZE, (rows-1)*SQSIZE, SQSIZE, 2*SQSIZE)) 
@@ -50,7 +49,7 @@ class Game:
             surface.blit(self.PlayerTwoImg, pygame.Rect(cols*SQSIZE, rows*SQSIZE, 2*SQSIZE, SQSIZE))
 
 
-    def show_winner(self, surface): #ispisivanje ko je pobednik
+    def show_winner(self, surface, player): #ispisivanje ko je pobednik
                                        
         white = (255, 255, 255)
         black = (0, 0, 0)
@@ -62,7 +61,7 @@ class Game:
         font = pygame.font.Font('freesansbold.ttf', 28)
         # create a text surface object,
         # on which text is drawn on it.
-        text = font.render('Player wins', True, black, white)
+        text = font.render('Player' + player + 'wins', True, black, white)
          
         # create a rectangular object for the
         # text surface object

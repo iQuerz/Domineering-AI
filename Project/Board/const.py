@@ -1,8 +1,7 @@
 from tkinter import *
 import sys
 
-ROWS = 8
-COLS = 8
+ROWS = COLS = 8 #default values
 
 AI_TURN = 0 #0=pvp, 1=prvi igra AI, 2=drugi
 
