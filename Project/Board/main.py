@@ -1,5 +1,6 @@
 import pygame, sys
 import GameEngine
+from GameEngine import IsMoveValidOne, IsMoveValidTwo
 from const import *
 from game import Game
 
@@ -7,54 +8,57 @@ class Main:
     def __init__ (self):
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH,HEIGHT))
-        pygame.display.set_caption('Domineering')       
+        pygame.display.set_caption('Domineering')      #naziv prozora
+        Icon = pygame.image.load('images/logo.png')     #logo igrice/prozora
+        pygame.display.set_icon(Icon)     
         self.game = Game()
-
 
     def mainLoop(self):
         
         Field = GameEngine.CreateMatrix(ROWS,COLS)
-        display_surface = pygame.display.set_mode((WIDTH, HEIGHT))
         screen = self.screen
         game = self.game
         GameState = True
-
+        
         while True:
             
             # show methods
             game.show_bg(screen, Field)
-           #game.show_text(display_surface)
-            for event in pygame.event.get():   
-                # key press
-                if event.type == pygame.KEYDOWN:
-
-                     # reseting a game
-                    if event.key == pygame.K_r:
-                        game.reset()
-                        game = self.game
-                        board = self.game.board
-
-                # quit application
-                elif event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                elif event.type == pygame.MOUSEBUTTONUP:
+                
+            for event in pygame.event.get():  
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if GameState == True:
                         location = pygame.mouse.get_pos()
                         x = location[0]//SQSIZE
                         y = location[1]//SQSIZE
-                        Change = GameEngine.PlayerOneMove(y,x, Field)
+                        moveCounter = 0
+                        Change = GameEngine.PlayerOneMove(y,x, Field)                       
                         if Change:
-                                GameState = False
+                            pygame.display.set_caption('Player 2 is on the move') #when state changes other player is on the move
+                            GameState = False
+                            moveCounter+=1
                     else:
                         location = pygame.mouse.get_pos()
                         x = location[0]//SQSIZE
                         y = location[1]//SQSIZE
-                        Change = GameEngine.PlayerTwoMove(y,x, Field)
+                        Change = GameEngine.PlayerTwoMove(y,x, Field)                       
                         if Change:
-                                GameState = True
+                            pygame.display.set_caption('Player 1 is on the move') #when state changes other player is on the move
+                            GameState = True 
+                            moveCounter+=1                         
+                # key press
+                elif event.type == pygame.KEYDOWN:
+                     # reseting a game
+                    if event.key == pygame.K_r: #ako se klikne R resetuje se igrica
+                        game.reset()
+                        game = self.game                       
+                # quit application
+                elif event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
 
-
+                          
+            #pygame.display.set_caption('Winner is: Player' + )
             pygame.display.update()  
 
 main = Main()
