@@ -66,7 +66,7 @@ class Main:
                 game.HoverPlayerOne(x,y,Field,screen)
             else:
                 game.HoverPlayerTwo(x,y,Field,screen)         
-            #pygame.display.set_caption('Winner is: Player' + )
+            pygame.display.set_caption('Winner is: Player')
             pygame.display.update()  
 
 main = Main()
