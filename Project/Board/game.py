@@ -9,17 +9,12 @@ class Game:
 
     def __init__(self):
         pass
-        #self.next_player = 1
-        #self.hovered_sqr = None
-        #self.board = Board()
-        #self.move = Move(initial,final)
         
     def show_bg(self, surface, field):
-        numbers = list(range(1,100))
         for row in range(ROWS):
             for col in range (COLS):
                 if (row + col) % 2 == 0:
-                    color = (169,169,169) #gray
+                    color = (153,153,153) #gray
                 else:
                     color = (255,250,250)  #white
                 
@@ -27,9 +22,9 @@ class Game:
                 
                 pygame.draw.rect(surface, color, rect) 
                 if field[row][col][0] == 1:
-                    surface.blit(self.PlayerOneImg, pygame.Rect(col*SQSIZE,(row-1)*SQSIZE,SQSIZE,2*SQSIZE))
+                    surface.blit(self.PlayerOneImg, pygame.Rect(col*SQSIZE, (row-1)*SQSIZE, SQSIZE, 2*SQSIZE))
                 elif field[row][col][0] == 2:
-                    surface.blit(self.PlayerTwoImg, pygame.Rect((col-1)*SQSIZE,row*SQSIZE,2*SQSIZE,SQSIZE))
+                    surface.blit(self.PlayerTwoImg, pygame.Rect((col-1)*SQSIZE, row*SQSIZE, 2*SQSIZE, SQSIZE))
 
     
     def show_winner(self, surface): #ispisivanje ko je pobednik
@@ -44,7 +39,7 @@ class Game:
         font = pygame.font.Font('freesansbold.ttf', 28)
         # create a text surface object,
         # on which text is drawn on it.
-        text = font.render('Player wins', True, black, white)       
+        text = font.render('Player wins', True, black, white)
          
         # create a rectangular object for the
         # text surface object
@@ -62,4 +57,4 @@ class Game:
         surface.blit(text, textRect)         
       
     def reset(self):
-        self.__init__() 
+        self.__init__()

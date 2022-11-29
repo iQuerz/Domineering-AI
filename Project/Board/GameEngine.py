@@ -3,23 +3,25 @@ import pygame
 import AI
 import UserInterface as UserInterface
 from game import Game
+from tkinter import *
+from tkinter import messagebox
 
 CountMove = 0
 #trenutno ima duplikati svih funkcija za svakog igraca jer mi bilo lakse tako da testiram 
-def CreateMatrix(M: int, N: int):
-    Matrix = [[(0,0) for x in range(M)] for y in range(N)]
+def CreateMatrix(rows: int, cols: int):
+    Matrix = [[(0,0) for x in range(cols)] for y in range(rows)]
     return Matrix
 
-def IsMoveValidOne(a : int, b : int, Mat):
-    if Mat[a-1][b][0] == 0 and Mat[a][b][0] == 0 and a != 0:
+def IsMoveValidOne(rows : int, cols : int, Mat):
+    if Mat[rows-1][cols][0] == 0 and Mat[rows][cols][0] == 0 and rows != 0:
         return True
     else:
         return False
 
-def IsMoveValidTwo(a : int, b : int, Mat):
-    if b >= len(Mat[0])-1:
+def IsMoveValidTwo(rows : int, cols : int, Mat):
+    if cols >= len(Mat[0])-1:
         return False
-    if Mat[a][b+1][0] == 0 and Mat[a][b][0] == 0:
+    if Mat[rows][cols+1][0] == 0 and Mat[rows][cols][0] == 0:
         return True
     else:
         return False
@@ -44,15 +46,17 @@ def CalcAvalaibleMovesPlayerTwo(Mat):
                 count+=1
     return count
 
-def PlayerOneMove(a : int, b : int, Mat):
-    if IsMoveValidOne(a,b,Mat):
+def PlayerOneMove(rows : int, cols : int, Mat):
+    if IsMoveValidOne(rows,cols,Mat):
         global CountMove
-        Mat[a - 1][b] = (-1,CountMove)
-        Mat[a][b] = (1,CountMove)
+        Mat[rows - 1][cols] = (-1,CountMove)
+        Mat[rows][cols] = (1,CountMove)
         CountMove+=1
         PrintField(Mat)
         if CalcAvalaibleMovesPlayerTwo(Mat) == 0:
             print("Player one wins")
+            Tk().wm_withdraw()
+            messagebox.showinfo('Domineering','Player one wins')
         else:
             print("Available moves for player Two :" , CalcAvalaibleMovesPlayerTwo(Mat))
         return True
@@ -62,15 +66,17 @@ def PlayerOneMove(a : int, b : int, Mat):
         return False
 
 
-def PlayerTwoMove(a : int, b : int, Mat):
-    if IsMoveValidTwo(a,b,Mat):
+def PlayerTwoMove(rows : int, cols : int, Mat):
+    if IsMoveValidTwo(rows,cols,Mat):
         global CountMove
-        Mat[a][b] = (-2,CountMove)
-        Mat[a][b+1] = (2,CountMove)
+        Mat[rows][cols] = (-2,CountMove)
+        Mat[rows][cols+1] = (2,CountMove)
         CountMove+=1
         PrintField(Mat)
         if CalcAvalaibleMovesPlayerOne(Mat) == 0:
             print("Player two wins")
+            Tk().wm_withdraw()
+            messagebox.showinfo('Domineering','Player two wins')
             
         else:
             print("Available moves for player One :" , CalcAvalaibleMovesPlayerOne(Mat))

@@ -27,31 +27,27 @@ class Main:
                 
             for event in pygame.event.get():  
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    location = pygame.mouse.get_pos()
+                    print(location)
+                    col = location[0]//SQSIZE # x koordinata pozicije klika
+                    row = location[1]//SQSIZE # y koordinata pozicije klika
+
                     if GameState == True:
-                        location = pygame.mouse.get_pos()
-                        x = location[0]//SQSIZE
-                        y = location[1]//SQSIZE
-                        moveCounter = 0
-                        Change = GameEngine.PlayerOneMove(y,x, Field)                       
-                        if Change:
+                        if GameEngine.PlayerOneMove(row,col, Field):
                             pygame.display.set_caption('Player 2 is on the move') #when state changes other player is on the move
                             GameState = False
-                            moveCounter+=1
                     else:
-                        location = pygame.mouse.get_pos()
-                        x = location[0]//SQSIZE
-                        y = location[1]//SQSIZE
-                        Change = GameEngine.PlayerTwoMove(y,x, Field)                       
-                        if Change:
+                        if GameEngine.PlayerTwoMove(row,col, Field):
                             pygame.display.set_caption('Player 1 is on the move') #when state changes other player is on the move
-                            GameState = True 
-                            moveCounter+=1                         
+                            GameState = True
+
                 # key press
                 elif event.type == pygame.KEYDOWN:
                      # reseting a game
                     if event.key == pygame.K_r: #ako se klikne R resetuje se igrica
                         game.reset()
-                        game = self.game                       
+                        game = self.game
+                
                 # quit application
                 elif event.type == pygame.QUIT:
                     pygame.quit()
@@ -59,7 +55,7 @@ class Main:
 
                           
             #pygame.display.set_caption('Winner is: Player' + )
-            pygame.display.update()  
+            pygame.display.update()
 
 main = Main()
 main.mainLoop()
