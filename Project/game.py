@@ -46,37 +46,7 @@ class Game:
 
     def HoverPlayerTwo(self, rows:int, cols:int, field, surface):
         if GameEngine.IsMoveValidTwo(rows, cols, field):
-            surface.blit(self.PlayerTwoImg, pygame.Rect(cols*SQSIZE, rows*SQSIZE, 2*SQSIZE, SQSIZE))
-
-
-    def show_winner(self, surface, player): #ispisivanje ko je pobednik
-                                       
-        white = (255, 255, 255)
-        black = (0, 0, 0)
-
-        # create a font object.
-        # 1st parameter is the font file
-        # which is present in pygame.
-        # 2nd parameter is size of the font
-        font = pygame.font.Font('freesansbold.ttf', 28)
-        # create a text surface object,
-        # on which text is drawn on it.
-        text = font.render('Player' + player + 'wins', True, black, white)
-         
-        # create a rectangular object for the
-        # text surface object
-        textRect = text.get_rect()
-        
-        # set the center of the rectangular object.
-        textRect.center = (WIDTH // 2, HEIGHT // 2.2)
-        
-        # completely fill the surface object
-        # with white color
-              
-        # copying the text surface object
-        # to the display surface object
-        # at the center coordinate.
-        surface.blit(text, textRect)         
+            surface.blit(self.PlayerTwoImg, pygame.Rect(cols*SQSIZE, rows*SQSIZE, 2*SQSIZE, SQSIZE))           
       
     def reset(self):
         self.__init__()

@@ -45,8 +45,8 @@ class Main:
                      # reseting game
                     if event.key == pygame.K_r:
                         main.mainLoop()
-                    
-                    game.show_bg(screen, Field)
+                        
+                        #### OVO OSTAJE JOS ####
                         
                 elif event.type == pygame.QUIT:
                     pygame.quit()
@@ -61,12 +61,7 @@ class Main:
             else:
                 game.HoverPlayerTwo(row, col, Field, screen)
   
-            pygame.display.update()
-            
-            if GameEngine.CalcAvalaibleMovesPlayerOne(Field) == 0:
-                show_winner(screen, '2')
-            else:
-                show_winner(screen, '1')              
+            pygame.display.update()         
                
 main = Main()
 main.mainLoop()
