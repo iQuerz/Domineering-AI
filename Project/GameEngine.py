@@ -1,11 +1,6 @@
 #imports
-import pygame
-from const import *
 import AI
-import UserInterface as UserInterface
-from game import Game
-from tkinter import *
-from tkinter import messagebox
+from UserInterface import *
 import pymsgbox
 
 CountMove = 0
@@ -57,15 +52,12 @@ def PlayerOneMove(rows : int, cols : int, Mat):
         PrintField(Mat)
         if CalcAvalaibleMovesPlayerTwo(Mat) == 0:
             print("Player one wins")
-            pymsgbox.alert('Player 1!', 'The winner is:', button='OK') #alert(text='', title='', button='OK')
-            #Tk().wm_withdraw()        
-            #messagebox.showinfo("Domineering","Player one wins")           
+            pymsgbox.alert('Player 1!', 'The winner is:', button='OK') #alert(text='', title='', button='OK')         
         else:
             print("Available moves for player Two:", CalcAvalaibleMovesPlayerTwo(Mat))
         return True    
     else:
         pymsgbox.alert('Try again!', 'Invalid move')
-        #pygame.display.set_caption('INVALID MOVE - try again') #stampa u zaglavlju
         print("Invalid move")
     return False
 
@@ -79,14 +71,11 @@ def PlayerTwoMove(rows : int, cols : int, Mat):
         if CalcAvalaibleMovesPlayerOne(Mat) == 0:
             print("Player two wins")  
             pymsgbox.alert('Player 2!', 'The winner is:', button='OK')
-            #Tk().wm_withdraw() 
-            #messagebox.showinfo("Domineering","Player two wins")
         else:
             print("Available moves for player One:", CalcAvalaibleMovesPlayerOne(Mat))
         return True
     else:
         pymsgbox.alert('Try again!', 'Invalid move')
-        #pygame.display.set_caption('INVALID MOVE - try again') #stampa u zaglavlju
         print("Invalid move")
     return False
     

@@ -1,8 +1,7 @@
 import pygame, sys
 import GameEngine
 from GameEngine import *
-from const import *
-from game import Game
+from UserInterface import *
 
 class Main:
     def __init__ (self):
@@ -10,7 +9,7 @@ class Main:
         self.screen = pygame.display.set_mode((WIDTH,HEIGHT))
         pygame.display.set_caption('Domineering')      #naziv prozora
         Icon = pygame.image.load('images/logo.png')     #logo igrice/prozora
-        pygame.display.set_icon(Icon)     
+        pygame.display.set_icon(Icon)
         self.game = Game()
 
     def mainLoop(self):
