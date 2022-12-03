@@ -16,7 +16,7 @@ if length >= 3:
 WIDTH = COLS * 80
 HEIGHT = ROWS * 80
 
-SQSIZE = WIDTH // COLS
+SQSIZE = WIDTH // COLS #square size
 
 class Game:
 
