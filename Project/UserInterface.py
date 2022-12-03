@@ -24,9 +24,6 @@ class Game:
     PlayerTwoImg = pygame.transform.scale(pygame.image.load("images/player_2.png"), ((SQSIZE*2), SQSIZE))
     black = (0, 0, 0)
     white = (255, 255, 255)
-
-    def __init__(self):
-        pass
         
     def show_bg(self, surface, field):
         for row in range(ROWS):
@@ -42,7 +39,7 @@ class Game:
 
                 #Font
                 font = pygame.font.Font('freesansbold.ttf', 18)
-                text = str(field[row][col][1]+1)
+                text = str(field[row][col][1])
                 text = font.render(text, True, self.white)
                 textRect = text.get_rect()
 

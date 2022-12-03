@@ -3,8 +3,8 @@ import AI
 from UserInterface import *
 import pymsgbox
 
-CountMove = 0
-#trenutno ima duplikati svih funkcija za svakog igraca jer mi bilo lakse tako da testiram 
+CountMove = 1 #krecemo od 1 da brojimo poteze
+
 def CreateMatrix(rows: int, cols: int):
     Matrix = [[(0,0) for x in range(cols)] for y in range(rows)]
     return Matrix
@@ -83,7 +83,7 @@ def PrintField(Field):
     for x in range(len(Field)):
         print(Field[x])
     print("----------------")
-       
+
 #primer igre
 
 #Field = CreateMatrix(3,3)

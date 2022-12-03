@@ -11,7 +11,12 @@ class Main:
         Icon = pygame.image.load('images/logo.png')     #logo igrice/prozora
         pygame.display.set_icon(Icon)
         self.game = Game()
-
+    
+    def resetGame(Field):
+        Field = GameEngine.CreateMatrix(ROWS,COLS)  #resetujemo matricu
+        GameEngine.CountMove = 1                    #resetujemo brojac poteza
+        main.mainLoop()                             #crtamo tablu i igrace iznova
+    
     def mainLoop(self):
         
         Field = GameEngine.CreateMatrix(ROWS,COLS)
@@ -41,11 +46,9 @@ class Main:
                 #keypress
                 elif event.type == pygame.KEYDOWN:
 
-                     # reseting game
-                    if event.key == pygame.K_r:
-                        main.mainLoop()
-                        
-                        #### OVO OSTAJE JOS ####
+                     #reseting the game on R key stroke
+                    if event.key == pygame.K_r:                       
+                        main.resetGame()
                         
                 elif event.type == pygame.QUIT:
                     pygame.quit()
