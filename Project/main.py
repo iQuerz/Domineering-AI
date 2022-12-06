@@ -13,6 +13,7 @@ class Main:
         self.game = Game()
     
     def resetGame(Field):
+        pygame.display.set_caption('Domineering')   #naziv prozora
         Field = GameEngine.CreateMatrix(ROWS,COLS)  #resetujemo matricu
         GameEngine.CountMove = 1                    #resetujemo brojac poteza
         main.mainLoop()                             #crtamo tablu i igrace iznova
