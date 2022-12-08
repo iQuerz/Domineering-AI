@@ -41,8 +41,8 @@ class Game:
                 pygame.draw.rect(surface, color, rect) 
                 
                 #Font
-                font = pygame.font.SysFont('georgia', 16)
-                font_label = pygame.font.SysFont('georgia', 13) #font za numeraciju
+                font = pygame.font.SysFont('calibri', 16)
+                font_label = pygame.font.SysFont('calibri', 13) #font za numeraciju
                 text = str(field[row][col][1])
                 text = font.render(text, True, self.white)
                 textRect = text.get_rect()

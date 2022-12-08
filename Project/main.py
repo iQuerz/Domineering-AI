@@ -65,6 +65,6 @@ class Main:
                 game.HoverPlayerTwo(row, col, Field, screen)
   
             pygame.display.update()         
-               
+                        
 main = Main()
 main.mainLoop()
