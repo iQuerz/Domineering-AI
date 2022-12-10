@@ -35,10 +35,10 @@ class Game:
                 if (row + col) % 2 == 0:
                     color = (153,153,153) #gray
                 else:
-                    color = (255,250,250)  #white                   
+                    color = (255,255,255) #white
                 
                 rect = (col * SQSIZE, row * SQSIZE, SQSIZE, SQSIZE)                             
-                pygame.draw.rect(surface, color, rect) 
+                pygame.draw.rect(surface, color, rect)
                 
                 #Font
                 font = pygame.font.SysFont('calibri', 16)
@@ -62,9 +62,10 @@ class Game:
                     surface.blit(self.PlayerOneImg, pygame.Rect(col*SQSIZE, (row-1)*SQSIZE, SQSIZE, 2*SQSIZE))
                     textRect.center = ((col*SQSIZE)+(SQSIZE//2), ((row-1)*SQSIZE)+SQSIZE)
                     surface.blit(text, textRect)
-                elif field[row][col][0] == 2:
+                
+                elif field[row][col][0] == -2:
                     surface.blit(self.PlayerTwoImg, pygame.Rect((col-1)*SQSIZE, row*SQSIZE, 2*SQSIZE, SQSIZE))
-                    textRect.center = ((col*SQSIZE), ((row-1)*SQSIZE)+(SQSIZE*1.5))
+                    textRect.center = (((col-1)*SQSIZE)+SQSIZE, ((row-1)*SQSIZE)+(SQSIZE*1.5))
                     surface.blit(text, textRect)
                 
     @staticmethod
