@@ -27,7 +27,11 @@ def mainLoop():
                 location = pygame.mouse.get_pos()
                 col = location[0]//SQSIZE # x koordinata pozicije klika
                 row = location[1]//SQSIZE # y koordinata pozicije klika
-                Engine.placeDomino(row, col, Field)
+                if not Engine.placeDomino(row, col, Field): InvalidMoveAlert()
+                Engine.nextPlayer()
+                if Engine.getAvailableMovesNumber(Field) == 0:
+                    PlayerWonAlert(Engine.playerOnMove%2+1)
+                    break
 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:                       
@@ -36,7 +40,7 @@ def mainLoop():
                 pygame.quit()
                 sys.exit()
         
-        #ovo se uvek izvrsava nma nikakv if samo se vidi ko je na potez
+        #ovo se uvek izvrsava, nema nikakav if, samo se vidi ko je na potezu
         location = pygame.mouse.get_pos()
         col = location[0]//SQSIZE
         row = location[1]//SQSIZE

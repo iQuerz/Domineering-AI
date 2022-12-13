@@ -1,6 +1,7 @@
 #UI uradjen po ugledu na https://github.com/AlejoG10/python-chess-ai-yt
 import pygame, sys
-import GameEngine
+import GameEngine as Engine
+import pymsgbox as msgbox
 
 ROWS = COLS = 8 #default values
 AI_TURN = 0 #0=pvp, 1=prvi igra AI, 2=drugi
@@ -72,9 +73,15 @@ def get_alphacol(col):
     return ALPHACOLS[col]
 
 def HoverPlayerOne(rows:int, cols:int, field, surface):
-    if GameEngine.isMoveValid(rows, cols, field):
+    if Engine.isMoveValid(rows, cols, field):
         surface.blit(PlayerOneImg, pygame.Rect(cols*SQSIZE, (rows-1)*SQSIZE, SQSIZE, 2*SQSIZE))
 
 def HoverPlayerTwo(rows:int, cols:int, field, surface):
-    if GameEngine.isMoveValid(rows, cols, field):
+    if Engine.isMoveValid(rows, cols, field):
         surface.blit(PlayerTwoImg, pygame.Rect(cols*SQSIZE, rows*SQSIZE, 2*SQSIZE, SQSIZE))
+
+def InvalidMoveAlert():
+    msgbox.alert(text='You\'re trying to make an invalid move. Try again', title='Invalid move', button='OK')
+
+def PlayerWonAlert(playerNum):
+    msgbox.alert(text=f'Player {playerNum} won.', title='Good game.', button='OK')
