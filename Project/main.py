@@ -27,8 +27,10 @@ def mainLoop():
                 location = pygame.mouse.get_pos()
                 col = location[0]//SQSIZE # x koordinata pozicije klika
                 row = location[1]//SQSIZE # y koordinata pozicije klika
-                if not Engine.placeDomino(row, col, Field): InvalidMoveAlert()
-                Engine.nextPlayer()
+                if not Engine.placeDomino(row, col, Field): 
+                    InvalidMoveAlert()
+                else:    
+                    Engine.nextPlayer()
                 if Engine.getAvailableMovesNumber(Field) == 0:
                     PlayerWonAlert(Engine.playerOnMove%2+1)
                     break
