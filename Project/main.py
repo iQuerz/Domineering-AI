@@ -16,6 +16,7 @@ def resetGame(Field):
 
 def mainLoop():
     Field = Engine.CreateMatrix(ROWS,COLS)
+    playerOnMove = 1
     global screen
     global game
     
@@ -27,12 +28,11 @@ def mainLoop():
                 location = pygame.mouse.get_pos()
                 col = location[0]//SQSIZE # x koordinata pozicije klika
                 row = location[1]//SQSIZE # y koordinata pozicije klika
-                if not Engine.placeDomino(row, col, Field): 
-                    InvalidMoveAlert()
-                else:    
-                    Engine.nextPlayer()
-                if Engine.getAvailableMovesNumber(Field) == 0:
-                    PlayerWonAlert(Engine.playerOnMove%2+1)
+                if Engine.placeDomino(row, col, Field, playerOnMove):
+                    playerOnMove = Engine.getNextPlayer(playerOnMove)
+                    Engine.RaiseCounter()
+                if Engine.getAvailableMovesNumber(Field, playerOnMove) == 0:
+                    PlayerWonAlert(playerOnMove%2+1)
                     break
 
             elif event.type == pygame.KEYDOWN:
@@ -46,9 +46,9 @@ def mainLoop():
         location = pygame.mouse.get_pos()
         col = location[0]//SQSIZE
         row = location[1]//SQSIZE
-        if Engine.playerOnMove==1:
+        if playerOnMove==1:
             HoverPlayerOne(row, col, Field, screen)
-        elif Engine.playerOnMove==2:
+        elif playerOnMove==2:
             HoverPlayerTwo(row, col, Field, screen)
         pygame.display.update()
 

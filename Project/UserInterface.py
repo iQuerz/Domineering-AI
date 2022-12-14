@@ -73,11 +73,11 @@ def get_alphacol(col):
     return ALPHACOLS[col]
 
 def HoverPlayerOne(rows:int, cols:int, field, surface):
-    if Engine.isMoveValid(rows, cols, field):
+    if Engine.isMoveValid(rows, cols, field, 1):
         surface.blit(PlayerOneImg, pygame.Rect(cols*SQSIZE, (rows-1)*SQSIZE, SQSIZE, 2*SQSIZE))
 
 def HoverPlayerTwo(rows:int, cols:int, field, surface):
-    if Engine.isMoveValid(rows, cols, field):
+    if Engine.isMoveValid(rows, cols, field, 2):
         surface.blit(PlayerTwoImg, pygame.Rect(cols*SQSIZE, rows*SQSIZE, 2*SQSIZE, SQSIZE))
 
 def InvalidMoveAlert():
