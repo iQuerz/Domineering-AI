@@ -37,7 +37,7 @@ def mainLoop():
 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:                       
-                    resetGame()
+                    resetGame(Field)
             elif event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
