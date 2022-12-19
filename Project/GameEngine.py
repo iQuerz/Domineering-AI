@@ -1,6 +1,7 @@
 #imports
 from UserInterface import *
 import copy
+from AI import *
 
 CountMove = 1 #krecemo od 1 da brojimo poteze
 def RaiseCounter():
@@ -64,7 +65,7 @@ def placeDomino(row, col, mat, playerOnMove): #place active player's domino on t
     mat[row][col] = (playerOnMove, CountMove)
     PrintField(mat)
     return True #move succesful
-
+      
 def PrintField(Field):
     for x in range(len(Field)):
         print(Field[x])

@@ -27,7 +27,7 @@ def mainLoop():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 location = pygame.mouse.get_pos()
                 col = location[0]//SQSIZE # x koordinata pozicije klika
-                row = location[1]//SQSIZE # y koordinata pozicije klika
+                row = location[1]//SQSIZE # y koordinata pozicije klika            
                 if Engine.placeDomino(row, col, Field, playerOnMove):
                     playerOnMove = Engine.getNextPlayer(playerOnMove)
                     Engine.RaiseCounter()
