@@ -3,6 +3,7 @@ import GameEngine as Engine
 from UserInterface import *
 import AI
 import time
+import time
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
@@ -38,9 +39,9 @@ def mainLoop():
         moveReady = False
 
         #AI turn
-        if playerOnMove == AI_TURN and not gameFinished:
-            pygame.time.wait(800)
-            aiTurn = AI.getNextMove(Field, Engine.isMoveValid, playerOnMove)
+        if playerOnMove == AI_TURN:
+            pygame.time.wait(200)
+            aiTurn = AI.getNextMove(Field, playerOnMove)
             newMoveRow = aiTurn[0]
             newMoveCol = aiTurn[1]
             moveReady = True
@@ -70,7 +71,6 @@ def mainLoop():
             if Engine.getAvailableMovesNumber(Field, playerOnMove) == 0:
                 show_bg(screen, Field)
                 PlayerWonAlert(playerOnMove%2+1, AI_TURN)
-                print("posle posle")
                 gameFinished = True
         
         #Hover za human turn
