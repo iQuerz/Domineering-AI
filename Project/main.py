@@ -2,6 +2,7 @@ import pygame, sys
 import GameEngine as Engine
 from UserInterface import *
 import AI
+import time
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
@@ -24,7 +25,12 @@ def mainLoop():
 
     while True:
         show_bg(screen, Field)
-        if gameFinished: continue #samo crtaj tablu kad se zavrsi game
+        if gameFinished: 
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+            continue #samo crtaj tablu kad se zavrsi game
 
         #variables
         newMoveRow = 0
@@ -32,7 +38,8 @@ def mainLoop():
         moveReady = False
 
         #AI turn
-        if playerOnMove == AI_TURN:
+        if playerOnMove == AI_TURN and not gameFinished:
+            pygame.time.wait(800)
             aiTurn = AI.getNextMove(Field, Engine.isMoveValid, playerOnMove)
             newMoveRow = aiTurn[0]
             newMoveCol = aiTurn[1]
@@ -63,6 +70,7 @@ def mainLoop():
             if Engine.getAvailableMovesNumber(Field, playerOnMove) == 0:
                 show_bg(screen, Field)
                 PlayerWonAlert(playerOnMove%2+1, AI_TURN)
+                print("posle posle")
                 gameFinished = True
         
         #Hover za human turn

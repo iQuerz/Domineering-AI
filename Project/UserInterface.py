@@ -96,8 +96,12 @@ def HoverPlayerTwo(rows:int, cols:int, field, surface):
 def InvalidMoveAlert():
     msgbox.alert(text='You\'re trying to make an invalid move. Try again', title='Invalid move', button='OK')
 
-def PlayerWonAlert(playerNum, aiTurn=0):
-    if(playerNum == aiTurn):
-        msgbox.alert(text="AI won.", title='Good game.', button='OK')
-        return
-    msgbox.alert(text=f'Player {playerNum} won.', title='Good game.', button='OK')
+def PlayerWonAlert(playerNum, aiTurn):
+    print(playerNum)
+    print(aiTurn)
+    if playerNum == aiTurn:
+        print("unutar if")
+        #msgbox.alert(text=f'AI won.', title='Good game.', button='OK')
+        print("pobedio AI")
+    else:
+        msgbox.alert(text=f'Player {playerNum} won.', title='Good game.', button='OK')
