@@ -8,7 +8,7 @@ AI_TURN = 0 #0=Human-v-Human, 1=prvi igra AI, 2=drugi igra AI
 
 #fetch from args
 length = len(sys.argv)
-if length <3:
+if length < 3:
     print("Uneli ste lose argumente! Tabla postavljena na podrazumevanu vrednost 8x8")
 if length == 3:
     if int(sys.argv[1]) > 20 or int(sys.argv[2]) > 20:
@@ -39,14 +39,15 @@ PlayerTwoImg = pygame.transform.scale(pygame.image.load("images/player_2.png"), 
     
 def show_bg(surface, field):
     black = (0, 0, 0)
+    gray = (153, 153, 153)
     white = (255, 255, 255)
 
     for row in range(ROWS):
         for col in range (COLS):
             if (row + col) % 2 == 0:
-                color = (153,153,153) #gray
+                color = gray
             else:
-                color = (255,255,255) #white
+                color = white
             
             rect = (col * SQSIZE, row * SQSIZE, SQSIZE, SQSIZE)                             
             pygame.draw.rect(surface, color, rect)
@@ -95,5 +96,8 @@ def HoverPlayerTwo(rows:int, cols:int, field, surface):
 def InvalidMoveAlert():
     msgbox.alert(text='You\'re trying to make an invalid move. Try again', title='Invalid move', button='OK')
 
-def PlayerWonAlert(playerNum):
+def PlayerWonAlert(playerNum, aiTurn=0):
+    if(playerNum == aiTurn):
+        msgbox.alert(text="AI won.", title='Good game.', button='OK')
+        return
     msgbox.alert(text=f'Player {playerNum} won.', title='Good game.', button='OK')

@@ -1,8 +1,8 @@
 import random
 
-def getNextMove(matrix, isMoveOK):
+def getNextMove(matrix, isMoveOK, playerOnMove):
     while True:
-        i=random.randrange(0, len(matrix))
-        j=random.randrange(0, len(matrix[0]))
-        if(isMoveOK(i, j, matrix)):
-            return (i, j)
+        row=random.randrange(0, len(matrix))
+        col=random.randrange(0, len(matrix[0]))
+        if isMoveOK(row, col, matrix, playerOnMove):
+            return (row, col)

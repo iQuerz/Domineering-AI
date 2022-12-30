@@ -1,6 +1,7 @@
 import pygame, sys
 import GameEngine as Engine
 from UserInterface import *
+import AI
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
@@ -18,31 +19,53 @@ def mainLoop():
     Field = Engine.CreateMatrix(ROWS,COLS)
     playerOnMove = 1
     global screen
-    global game
     
+    gameFinished = False
+
     while True:
         show_bg(screen, Field)
-        
-        for event in pygame.event.get():  
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                location = pygame.mouse.get_pos()
-                col = location[0]//SQSIZE # x koordinata pozicije klika
-                row = location[1]//SQSIZE # y koordinata pozicije klika            
-                if Engine.placeDomino(row, col, Field, playerOnMove):
-                    playerOnMove = Engine.getNextPlayer(playerOnMove)
-                    Engine.RaiseCounter()
-                if Engine.getAvailableMovesNumber(Field, playerOnMove) == 0:
-                    PlayerWonAlert(playerOnMove%2+1)
-                    break
+        if gameFinished: continue #samo crtaj tablu kad se zavrsi game
 
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_r:                       
-                    resetGame(Field)
-            elif event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+        #variables
+        newMoveRow = 0
+        newMoveCol = 0
+        moveReady = False
+
+        #AI turn
+        if playerOnMove == AI_TURN:
+            aiTurn = AI.getNextMove(Field, Engine.isMoveValid, playerOnMove)
+            newMoveRow = aiTurn[0]
+            newMoveCol = aiTurn[1]
+            moveReady = True
+        #Human turn
+        else:
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    location = pygame.mouse.get_pos()
+                    newMoveCol = location[0]//SQSIZE # x koordinata pozicije klika
+                    newMoveRow = location[1]//SQSIZE # y koordinata pozicije klika
+                    if Engine.isMoveValid(newMoveRow, newMoveCol, Field, playerOnMove):
+                        moveReady = True
+
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_r:                       
+                        resetGame(Field)
+                elif event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
         
-        #ovo se uvek izvrsava, nema nikakav if, samo se vidi ko je na potezu
+        if moveReady:
+            Engine.placeDomino(newMoveRow, newMoveCol, Field, playerOnMove)
+            playerOnMove = Engine.getNextPlayer(playerOnMove)
+            Engine.RaiseCounter()
+
+            if Engine.getAvailableMovesNumber(Field, playerOnMove) == 0:
+                show_bg(screen, Field)
+                PlayerWonAlert(playerOnMove%2+1, AI_TURN)
+                gameFinished = True
+        
+        #Hover za human turn
         location = pygame.mouse.get_pos()
         col = location[0]//SQSIZE
         row = location[1]//SQSIZE
