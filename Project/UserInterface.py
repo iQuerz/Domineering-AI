@@ -90,12 +90,13 @@ def HoverPlayerTwo(rows:int, cols:int, field, surface):
 def InvalidMoveAlert():
     msgbox.alert(text='You\'re trying to make an invalid move. Try again', title='Invalid move', button='OK')
 
-def PlayerWonAlert(playerNum, aiTurn):
-    print(playerNum)
-    print(aiTurn)
-    if playerNum == aiTurn:
-        print("unutar if")
-        #msgbox.alert(text=f'AI won.', title='Good game.', button='OK')
-        print("pobedio AI")
-    else:
-        msgbox.alert(text=f'Player {playerNum} won.', title='Good game.', button='OK')
+def PlayerWonAlert(playerNum):
+    # print(playerNum)
+    # print(aiTurn)
+    # if playerNum == aiTurn:
+    #      print("unutar if")
+    #      msgbox.alert(text=f'Player 1 won.', title='Good game.', button='OK')
+    #      print("pobedio AI")
+    # else:
+    #     msgbox.alert(text=f'Player 2 won.', title='Good game.', button='OK')
+    pygame.display.set_caption(f'Player {playerNum} won.')      #naziv prozora

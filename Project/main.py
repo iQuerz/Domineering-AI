@@ -67,12 +67,12 @@ def mainLoop():
             Engine.placeDomino(newMoveRow, newMoveCol, Field, playerOnMove)
             playerOnMove = Engine.getNextPlayer(playerOnMove)
             Engine.RaiseCounter()
-
+            
             if Engine.getAvailableMovesNumber(Field, playerOnMove) == 0:
-                show_bg(screen, Field)
-                PlayerWonAlert(playerOnMove%2+1, AI_TURN)
-                gameFinished = True
-        
+                PlayerWonAlert(playerOnMove%2+1)
+                show_bg(screen, Field)                
+                gameFinished = True                           
+
         #Hover za human turn
         location = pygame.mouse.get_pos()
         col = location[0]//SQSIZE
