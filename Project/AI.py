@@ -19,8 +19,14 @@ def getNextMoveMinMax(matrix, depth, playerOnMove):
             bestMoveMatrix = moveMatrix
     return Engine.get_last_move(bestMoveMatrix)
 
+transposition_table = {}
 def min_maxWithAlphaBeta(matrix, depth, alpha, beta, playerOnMove):
-    if depth == 0 or Engine.getAvailableMovesNumber(matrix, playerOnMove) == 0:
+    # Check if the position is in the transposition table
+    key = str(matrix)
+    if key in transposition_table:
+        return transposition_table[key]
+
+    if depth==0 or Engine.getAvailableMovesNumber(matrix, playerOnMove) == 0:
         return Engine.getBoardState(matrix, playerOnMove)
 
     if playerOnMove == 1:
@@ -32,6 +38,7 @@ def min_maxWithAlphaBeta(matrix, depth, alpha, beta, playerOnMove):
             alpha = max(alpha, val)
             if beta <= alpha:
                 break
+        transposition_table[key] = max_val
         return max_val
 
     else:
@@ -43,6 +50,7 @@ def min_maxWithAlphaBeta(matrix, depth, alpha, beta, playerOnMove):
             beta = min(beta, val)
             if beta <= alpha:
                 break
+        transposition_table[key] = min_val
         return min_val
 
 def min_max(matrix, depth, playerOnMove):
