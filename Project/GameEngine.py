@@ -42,13 +42,11 @@ def getAvailableMovesNumber(mat, playerOnMove): #use for checking if the active 
 
 #ista funkcija kao gore 
 def getBoardState(matrix, playerOnMove):
+    # Calculate heuristics
     playerOne = Engine.getAvailableMovesNumber(matrix, playerOnMove)
     playerTwo = -1 * Engine.getAvailableMovesNumber(matrix, Engine.getNextPlayer(playerOnMove))
-
-    # Add heuristics
     mobility = playerOne - playerTwo
-    boardState = playerOne + playerTwo + mobility * 5
-    
+
     # Positioning heuristic
     playerOnePositions = 0
     playerTwoPositions = 0
@@ -58,12 +56,16 @@ def getBoardState(matrix, playerOnMove):
                 playerOnePositions += 1
             elif matrix[i][j] == 2:
                 playerTwoPositions += 1
-    boardState += (playerOnePositions - playerTwoPositions) * 3
-    
+    positioning = playerOnePositions - playerTwoPositions
+
     # Material advantage heuristic
-    boardState += (playerOnePositions - playerTwoPositions) * 2
+    material = playerOnePositions - playerTwoPositions
+
+    # Calculate board state
+    boardState = playerOne + playerTwo + mobility * 5 + positioning * 3 + material * 2
     
     return boardState
+
 
 
 #optimizacija treba
