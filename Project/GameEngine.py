@@ -41,11 +41,30 @@ def getAvailableMovesNumber(mat, playerOnMove): #use for checking if the active 
     return counter
 
 #ista funkcija kao gore 
-def getBoardState(mat, playerOnMove): #use for checking if the active player won
-    playerOne = getAvailableMovesNumber(mat, playerOnMove)
-    playerTwo = -1 * getAvailableMovesNumber(mat, getNextPlayer(playerOnMove))
+def getBoardState(matrix, playerOnMove):
+    playerOne = Engine.getAvailableMovesNumber(matrix, playerOnMove)
+    playerTwo = -1 * Engine.getAvailableMovesNumber(matrix, Engine.getNextPlayer(playerOnMove))
 
-    return playerOne + playerTwo
+    # Add heuristics
+    mobility = playerOne - playerTwo
+    boardState = playerOne + playerTwo + mobility * 5
+    
+    # Positioning heuristic
+    playerOnePositions = 0
+    playerTwoPositions = 0
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if matrix[i][j] == 1:
+                playerOnePositions += 1
+            elif matrix[i][j] == 2:
+                playerTwoPositions += 1
+    boardState += (playerOnePositions - playerTwoPositions) * 3
+    
+    # Material advantage heuristic
+    boardState += (playerOnePositions - playerTwoPositions) * 2
+    
+    return boardState
+
 
 #optimizacija treba
 def get_last_move(matrix):
