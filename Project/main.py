@@ -40,10 +40,10 @@ def mainLoop():
 
         #AI turn
         if playerOnMove == AI_TURN:
-            pygame.time.wait(200)
-            aiTurn = AI.getNextMove(Field, playerOnMove)
+            aiTurn = AI.getNextMoveMinMax(Field, 3, playerOnMove)
             newMoveRow = aiTurn[0]
             newMoveCol = aiTurn[1]
+            print(aiTurn)
             moveReady = True
         #Human turn
         else:
@@ -65,6 +65,8 @@ def mainLoop():
         
         if moveReady:
             Engine.placeDomino(newMoveRow, newMoveCol, Field, playerOnMove)
+            print(playerOnMove)
+            Engine.PrintField(Field)
             playerOnMove = Engine.getNextPlayer(playerOnMove)
             Engine.RaiseCounter()
             

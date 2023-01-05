@@ -40,6 +40,24 @@ def getAvailableMovesNumber(mat, playerOnMove): #use for checking if the active 
             counter+=1
     return counter
 
+#ista funkcija kao gore 
+def getBoardState(mat, playerOnMove): #use for checking if the active player won
+    playerOne = getAvailableMovesNumber(mat, playerOnMove)
+    playerTwo = -1 * getAvailableMovesNumber(mat, getNextPlayer(playerOnMove))
+
+    return playerOne + playerTwo
+
+#optimizacija treba
+def get_last_move(matrix):
+  last_move_number = 0
+  last_move_coords = (0, 0)
+  for i in range(len(matrix)):
+    for j in range(len(matrix[0])):
+      if matrix[i][j][1] > last_move_number and matrix[i][j][0] > 0:
+        last_move_number = matrix[i][j][1]
+        last_move_coords = (i, j)
+  return last_move_coords
+
 def getAvailableMovesMatrices(mat, playerOnMove): #vraca matrice available poteza za igraca koji je na potezu
     availableMoves = []
     for row in range(playerOnMove%2,ROWS): # ako igra 1. player, pocinje od 2. reda, jer u prvom svakako ne moze da se igra
@@ -62,7 +80,9 @@ def placeDomino(row, col, mat, playerOnMove): #place active player's domino on t
     
     mat[row - playerOnMove%2][col + (playerOnMove+1)%2] = (-playerOnMove, CountMove) # oduzimam 1 od rows ako je prvi player, dodajem 1 u cols ako je drugi player
     mat[row][col] = (playerOnMove, CountMove)
-    PrintField(mat)
+    #PrintField(mat)
+    #print(getBoardState(mat,playerOnMove))
+    #print(get_last_move(mat))
     return True #move succesful
       
 def PrintField(Field):
