@@ -40,7 +40,7 @@ def mainLoop():
 
         #AI turn
         if playerOnMove == AI_TURN:
-            aiTurn = AI.getNextMoveMinMax(Field, 3, playerOnMove)
+            aiTurn = AI.getNextMoveMinMax(Field, 5, playerOnMove)
             newMoveRow = aiTurn[0]
             newMoveCol = aiTurn[1]
             print(aiTurn)

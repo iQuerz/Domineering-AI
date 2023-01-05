@@ -17,8 +17,6 @@ def getNextMoveMinMax(matrix, depth, playerOnMove):
     for move in available_moves:
         val = min_maxWithAlphaBeta(move, depth, -float("inf"), float("inf"), Engine.getNextPlayer(playerOnMove))
         if val > best_val:
-            best_move_cord = Engine.get_last_move(move)
-            if Engine.isMoveValid(best_move_cord[0], best_move_cord[1], matrix, playerOnMove):
                 best_val = val
                 best_move = move           
     return Engine.get_last_move(best_move)

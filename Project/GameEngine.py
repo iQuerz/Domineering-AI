@@ -62,7 +62,8 @@ def getAvailableMovesMatrices(mat, playerOnMove): #vraca matrice available potez
     availableMoves = []
     for row in range(playerOnMove%2,ROWS): # ako igra 1. player, pocinje od 2. reda, jer u prvom svakako ne moze da se igra
         for col in range(COLS - (playerOnMove-1)): # ako igra 2. player, oduzima 1 kolonu jer tu svakako ne moze da se igra
-            availableMoves.append(getNewMoveMatrix(row, col, mat, playerOnMove)) # proverava se validity podeza unutar getNewMoveMatrix
+            if isMoveValid(row,col,mat,playerOnMove):
+                availableMoves.append(getNewMoveMatrix(row, col, mat, playerOnMove)) # proverava se validity podeza unutar getNewMoveMatrix
     return availableMoves
 
 def getNewMoveMatrix(row, col, mat, playerOnMove):
