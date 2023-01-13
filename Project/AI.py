@@ -1,15 +1,15 @@
-import random
+import time
 import GameEngine as Engine
-from Const import AI_TURN
+from Const import *
 
-def getNextMove(matrix, playerOnMove):
-    while True:
-        row=random.randrange(0, len(matrix))
-        col=random.randrange(0, len(matrix[0]))
-        if Engine.isMoveValid(row, col, matrix, playerOnMove):
-            return (row, col)
+turnStartTime = time.time()
+currentBestMoveMatrix = 0
 
 def getNextMoveMinMax(matrix, depth, playerOnMove):
+    global turnStartTime
+    global currentBestMoveMatrix
+    turnStartTime = time.time()
+
     bestMoveMatrix = None
     if AI_TURN == 1:
         bestMoveValue = -float("inf")
@@ -20,12 +20,19 @@ def getNextMoveMinMax(matrix, depth, playerOnMove):
     count = len(availableMovesMatrices)
     print("available moves left :", count)
     for moveMatrix in availableMovesMatrices:
+
+        #time restriction
+        currentTurnTime = time.time()
+        if currentTurnTime-turnStartTime >= TIME_LIMIT_SECONDS:
+            return Engine.get_last_move(currentBestMoveMatrix)
+
         val = min_maxWithAlphaBeta(moveMatrix, depth, -float("inf"), float("inf"), Engine.getNextPlayer(playerOnMove), count)
         print("val is : " , val)
         if AI_TURN == 1:
             if val > bestMoveValue:
                 bestMoveValue = val
                 bestMoveMatrix = moveMatrix
+                currentBestMoveMatrix = moveMatrix
                 print("picked :" , bestMoveValue)
                 if bestMoveValue == 100:
                     return Engine.get_last_move(bestMoveMatrix)
@@ -34,6 +41,7 @@ def getNextMoveMinMax(matrix, depth, playerOnMove):
             if val < bestMoveValue:
                 bestMoveValue = val
                 bestMoveMatrix = moveMatrix
+                currentBestMoveMatrix = moveMatrix
                 print("picked :" , bestMoveValue)
                 if bestMoveValue == -100:
                     return Engine.get_last_move(bestMoveMatrix)
@@ -47,7 +55,7 @@ def min_maxWithAlphaBeta(matrix, depth, alpha, beta, playerOnMove, count):
         return transposition_table[key]
 
     if count ==0 or depth==0:
-        return Engine.getBoardState(matrix, playerOnMove)
+        return Engine.getBoardStateOptimized(matrix, playerOnMove)
 
     if playerOnMove == 1:
         max_val = -float("inf")
@@ -74,22 +82,3 @@ def min_maxWithAlphaBeta(matrix, depth, alpha, beta, playerOnMove, count):
                 break
         transposition_table[key] = min_val
         return min_val
-
-def min_max(matrix, depth, playerOnMove):
-  if Engine.getAvailableMovesNumber(matrix, playerOnMove) == 0 or depth == 0:
-    return Engine.getBoardState(matrix, playerOnMove)
-  
-  if playerOnMove == 1:
-    max_val = -float("inf")
-    available_moves = Engine.getAvailableMovesMatrices(matrix, playerOnMove)
-    for move in available_moves:
-      val = min_max(move, depth - 1, Engine.getNextPlayer(playerOnMove))
-      max_val = max(max_val, val)
-    return max_val
-  else:
-    min_val = float("inf")
-    available_moves = Engine.getAvailableMovesMatrices(matrix, playerOnMove)
-    for move in available_moves:
-      val = min_max(move, depth - 1, Engine.getNextPlayer(playerOnMove))
-      min_val = min(min_val, val)
-    return min_val

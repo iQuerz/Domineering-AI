@@ -24,4 +24,6 @@ if AI_TURN == 0:
 WIDTH = COLS * 70
 HEIGHT = ROWS * 70
 SQSIZE = WIDTH // COLS #square size
+
 AI_DEPTH = 2 + AI_TURN
+TIME_LIMIT_SECONDS = 29 #value - 1
