@@ -40,7 +40,7 @@ def mainLoop():
         #AI turn
         if playerOnMove == AI_TURN:
             start = time.time()
-            aiTurn = AI.getNextMoveMinMax(Field, 5, playerOnMove)
+            aiTurn = AI.getNextMoveMinMax(Field, 4, playerOnMove)
             end = time.time()
             print("time needed for AI turn: ", end-start, "s")
             newMoveRow = aiTurn[0]

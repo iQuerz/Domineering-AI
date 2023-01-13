@@ -1,5 +1,6 @@
 import random
 import GameEngine as Engine
+from UserInterface import AI_TURN
 
 def getNextMove(matrix, playerOnMove):
     while True:
@@ -7,16 +8,29 @@ def getNextMove(matrix, playerOnMove):
         col=random.randrange(0, len(matrix[0]))
         if Engine.isMoveValid(row, col, matrix, playerOnMove):
             return (row, col)
-    
+
 def getNextMoveMinMax(matrix, depth, playerOnMove):
     bestMoveMatrix = None
-    bestMoveValue = -float("inf")
+    if AI_TURN == 1:
+      bestMoveValue = -float("inf")
+    elif AI_TURN == 2:
+      bestMoveValue = +float("inf") 
     availableMovesMatrices = Engine.getAvailableMovesMatrices(matrix, playerOnMove)
+    count = len(availableMovesMatrices)
+    print("available moves left :" ,count)
     for moveMatrix in availableMovesMatrices:
         val = min_maxWithAlphaBeta(moveMatrix, depth, -float("inf"), float("inf"), Engine.getNextPlayer(playerOnMove))
-        if val > bestMoveValue:
+        print("val is : " , val)
+        if AI_TURN == 1:
+          if val > bestMoveValue:
             bestMoveValue = val
             bestMoveMatrix = moveMatrix
+            print("picked :" , bestMoveValue)
+        elif AI_TURN == 2:
+          if val < bestMoveValue:
+            bestMoveValue = val
+            bestMoveMatrix = moveMatrix
+            print("picked :" , bestMoveValue)
     return Engine.get_last_move(bestMoveMatrix)
 
 transposition_table = {}

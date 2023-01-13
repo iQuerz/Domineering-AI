@@ -45,28 +45,14 @@ def getBoardState(matrix, playerOnMove):
     # Calculate heuristics
     playerOne = Engine.getAvailableMovesNumber(matrix, playerOnMove)
     playerTwo = -1 * Engine.getAvailableMovesNumber(matrix, Engine.getNextPlayer(playerOnMove))
-    mobility = playerOne - playerTwo
-
-    # Positioning heuristic
-    playerOnePositions = 0
-    playerTwoPositions = 0
-    for i in range(len(matrix)):
-        for j in range(len(matrix[0])):
-            if matrix[i][j] == 1:
-                playerOnePositions += 1
-            elif matrix[i][j] == 2:
-                playerTwoPositions += 1
-    positioning = playerOnePositions - playerTwoPositions
-
-    # Material advantage heuristic
-    material = playerOnePositions - playerTwoPositions
-
-    # Calculate board state
-    boardState = playerOne + playerTwo + mobility * 5 + positioning * 3 + material * 2
+    mobility = playerOne + playerTwo
     
-    return boardState
-
-
+    if playerOne == 0:
+        return -100
+    if playerTwo == 0:
+        return 100
+    
+    return mobility
 
 #optimizacija treba
 def get_last_move(matrix):
