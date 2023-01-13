@@ -44,8 +44,8 @@ def getAvailableMovesNumber(mat, playerOnMove): #use for checking if the active 
 def getBoardState(matrix, playerOnMove):
     # Calculate heuristics
     playerOne = Engine.getAvailableMovesNumber(matrix, playerOnMove)
-    playerTwo = -1 * Engine.getAvailableMovesNumber(matrix, Engine.getNextPlayer(playerOnMove))
-    mobility = playerOne + playerTwo
+    playerTwo = Engine.getAvailableMovesNumber(matrix, Engine.getNextPlayer(playerOnMove))
+    mobility = 1*playerOne - 0.9*playerTwo
     
     if playerOne == 0:
         return -100

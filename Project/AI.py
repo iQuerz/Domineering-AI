@@ -1,6 +1,6 @@
 import random
 import GameEngine as Engine
-from UserInterface import AI_TURN
+from Const import AI_TURN
 
 def getNextMove(matrix, playerOnMove):
     while True:

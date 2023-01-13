@@ -1,6 +1,7 @@
 import pygame, sys
 import GameEngine as Engine
 from UserInterface import *
+from Const import *
 import AI
 import time
 
@@ -40,9 +41,9 @@ def mainLoop():
         #AI turn
         if playerOnMove == AI_TURN:
             start = time.time()
-            aiTurn = AI.getNextMoveMinMax(Field, 4, playerOnMove)
+            aiTurn = AI.getNextMoveMinMax(Field, AI_DEPTH, playerOnMove)
             end = time.time()
-            print("time needed for AI turn: ", end-start, "s")
+            print("time needed for AI turn: ", end - start, "s")
             newMoveRow = aiTurn[0]
             newMoveCol = aiTurn[1]
             print(aiTurn)
