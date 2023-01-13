@@ -18,6 +18,8 @@ def getNextPlayer(playerOnMove):
 #-----------------------------------------------------VALIDATION----------------------------------------------------------
 
 def isMoveValid(row, col, Mat, playerOnMove): #is the given move valid for active player
+    if Mat[row][col] == 0:
+        return False
     match playerOnMove:
         case 1:
             if row != 0 and Mat[row-1][col][0] == 0 and Mat[row][col][0] == 0:
@@ -31,28 +33,24 @@ def isMoveValid(row, col, Mat, playerOnMove): #is the given move valid for activ
 
 #------------------------------------------CALCULATE MOVES/GENERATE NEW MOVE MATRICES---------------------------------------------------------
 
-def getAvailableMovesNumber(mat, playerOnMove): #use for checking if the active player won
-    counter = 0
-    for row in range(playerOnMove%2,ROWS): # ako igra 1. player, pocinje od 2. reda, jer u prvom svakako ne moze da se igra
-        for col in range(COLS - (playerOnMove-1)): # ako igra 2. player, oduzima 1 kolonu jer tu svakako ne moze da se igra
-            if not mat[row][col][0] == 0: continue
-            if not isMoveValid(row, col, mat, playerOnMove): continue
-            counter+=1
-    return counter
+def getAvailableMovesNumberOptimized(mat, playerOnMove):
+    counterPlayerOne = 0
+    counterPlayerTwo = 0
+    for row in range(ROWS):
+        for col in range(COLS):
+            if isMoveValid(row, col, mat, playerOnMove):
+                counterPlayerOne+=1
+            if isMoveValid(row, col, mat, getNextPlayer(playerOnMove)):
+                counterPlayerTwo+=1
+    return (counterPlayerOne,counterPlayerTwo)
 
-#ista funkcija kao gore 
-def getBoardState(matrix, playerOnMove):
-    # Calculate heuristics
-    playerOne = Engine.getAvailableMovesNumber(matrix, playerOnMove)
-    playerTwo = Engine.getAvailableMovesNumber(matrix, Engine.getNextPlayer(playerOnMove))
-    mobility = 1*playerOne - 0.9*playerTwo
-    
-    if playerOne == 0:
-        return -100
-    if playerTwo == 0:
-        return 100
-    
-    return mobility
+def getBoardStateOptimized(matrix, playerOnMove):
+    movesLeft = getAvailableMovesNumberOptimized(matrix, playerOnMove)
+    moveDiff = 1*movesLeft[0] - 0.9*movesLeft[1] #movesLeft[0] for player 1  &  movesLeft[1] for player 2
+
+    if movesLeft[0] == 0:   return -100
+    elif movesLeft[1] == 0: return 100
+    else:                   return moveDiff
 
 #optimizacija treba
 def get_last_move(matrix):
