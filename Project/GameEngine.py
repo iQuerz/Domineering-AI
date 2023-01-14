@@ -32,7 +32,6 @@ def isMoveValid(row, col, Mat, playerOnMove): #is the given move valid for activ
 
 
 #------------------------------------------CALCULATE MOVES/GENERATE NEW MOVE MATRICES---------------------------------------------------------
-
 def getAvailableMovesNumber(mat, playerOnMove): #use for checking if the active player won
     counter = 0
     for row in range(playerOnMove%2,ROWS): # ako igra 1. player, pocinje od 2. reda, jer u prvom svakako ne moze da se igra

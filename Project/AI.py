@@ -3,14 +3,14 @@ import GameEngine as Engine
 from Const import *
 
 turnStartTime = time.time()
-currentBestMoveMatrix = 0
+bestMoveMatrix = [[]]
 
 def getNextMoveMinMax(matrix, depth, playerOnMove):
     global turnStartTime
-    global currentBestMoveMatrix
+    global bestMoveMatrix
     turnStartTime = time.time()
+    bestMoveMatrix = [[]]
 
-    bestMoveMatrix = None
     if AI_TURN == 1:
         bestMoveValue = -float("inf")
     elif AI_TURN == 2:
@@ -24,7 +24,7 @@ def getNextMoveMinMax(matrix, depth, playerOnMove):
         #time restriction
         currentTurnTime = time.time()
         if currentTurnTime-turnStartTime >= TIME_LIMIT_SECONDS:
-            return Engine.get_last_move(currentBestMoveMatrix)
+            return Engine.get_last_move(bestMoveMatrix)
 
         val = min_maxWithAlphaBeta(moveMatrix, depth, -float("inf"), float("inf"), Engine.getNextPlayer(playerOnMove), count)
         print("val is : " , val)
@@ -32,7 +32,6 @@ def getNextMoveMinMax(matrix, depth, playerOnMove):
             if val > bestMoveValue:
                 bestMoveValue = val
                 bestMoveMatrix = moveMatrix
-                currentBestMoveMatrix = moveMatrix
                 print("picked :" , bestMoveValue)
                 if bestMoveValue == 100:
                     return Engine.get_last_move(bestMoveMatrix)
@@ -41,7 +40,6 @@ def getNextMoveMinMax(matrix, depth, playerOnMove):
             if val < bestMoveValue:
                 bestMoveValue = val
                 bestMoveMatrix = moveMatrix
-                currentBestMoveMatrix = moveMatrix
                 print("picked :" , bestMoveValue)
                 if bestMoveValue == -100:
                     return Engine.get_last_move(bestMoveMatrix)
