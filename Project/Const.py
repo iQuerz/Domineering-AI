@@ -25,8 +25,12 @@ WIDTH = COLS * 70
 HEIGHT = ROWS * 70
 SQSIZE = WIDTH // COLS #square size
 
-AI_DEPTH = 4 - AI_TURN
+AI_DEPTH = 120 - AI_TURN
+
 TIME_LIMIT_SECONDS = 28 #value - 1
 
 P1_WIN_VALUE = 100
 P2_WIN_VALUE = -100
+
+ALPHA_START = -float("inf")
+BETA_START = float("inf")

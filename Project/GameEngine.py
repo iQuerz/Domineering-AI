@@ -42,34 +42,62 @@ def getAvailableMovesNumber(mat, playerOnMove): #use for checking if the active 
     return counter
 
 def getAvailableMovesNumberOptimized(mat, playerOnMove):
-    currentPlayerCounter = 0
-    oponentPlayerCounter = 0
+    player1Counter = 0
+    player2Counter = 0
     for row in range(ROWS):
         for col in range(COLS):
-            if isMoveValid(row, col, mat, playerOnMove):
-                currentPlayerCounter+=1
-            if isMoveValid(row, col, mat, getNextPlayer(playerOnMove)):
-                oponentPlayerCounter+=1
-    return (currentPlayerCounter, oponentPlayerCounter)
+            if isMoveValid(row, col, mat, 1):
+                player1Counter+=1
+            if isMoveValid(row, col, mat, 2):
+                player2Counter+=1
+    return (player1Counter, player2Counter)
 
-def getBoardStateOptimized(matrix, playerOnMove):
-    movesLeft = getAvailableMovesNumberOptimized(matrix, playerOnMove)
-    moveDiff = 1*movesLeft[0] - 0.9*movesLeft[1] #movesLeft[0] for player 1  &  movesLeft[1] for player 2
+def getBoardStateOptimized1(matrix, playerOnMove):
+    player1Counter = 0
+    player2Counter = 0
+    for row in range(ROWS):
+        for col in range(COLS):
+            if isMoveValid(row, col, matrix, 1):
+                player1Counter+=1
+            if isMoveValid(row, col, matrix, 2):
+                player2Counter+=1
 
-    if movesLeft[0] == 0:   return P2_WIN_VALUE
-    elif movesLeft[1] == 0: return P1_WIN_VALUE
+    moveDiff = player1Counter - (player2Counter-1)
+    if playerOnMove == 2:
+        moveDiff = (player1Counter-1) - player2Counter
+
+    if player1Counter == 0:   return P2_WIN_VALUE
+    elif player2Counter == 0: return P1_WIN_VALUE
     else:                   return moveDiff
 
-#optimizacija treba
-def get_last_move(matrix):
-  last_move_number = 0
-  last_move_coords = (0, 0)
-  for i in range(len(matrix)):
-    for j in range(len(matrix[0])):
-      if matrix[i][j][1] > last_move_number and matrix[i][j][0] > 0:
-        last_move_number = matrix[i][j][1]
-        last_move_coords = (i, j)
-  return last_move_coords
+def getBoardStateOptimized(matrix, playerOnMove):
+    player1_moves = 0
+    player2_moves = 0
+    total_moves = 0
+    for row in range(len(matrix)):
+        for col in range(len(matrix[row])):
+            if isMoveValid(row, col, matrix, 1):
+                player1_moves += 1
+                total_moves += 1
+            elif isMoveValid(row, col, matrix, 2):
+                player2_moves += 1
+                total_moves += 1
+    
+    if total_moves == 0:
+        return 0
+
+    if playerOnMove == 1:
+        probability = player1_moves / total_moves
+    else:
+        probability = player2_moves / total_moves
+    move_diff = probability * (player1_moves - player2_moves)
+
+    if player1_moves == 0:
+        return P2_WIN_VALUE
+    elif player2_moves == 0:
+        return P1_WIN_VALUE
+    else:
+        return move_diff
 
 def getAvailableMovesMatrices(mat, playerOnMove): #vraca matrice available poteza za igraca koji je na potezu
     availableMoves = []
@@ -83,6 +111,52 @@ def getNewMoveMatrix(row, col, mat, playerOnMove):
     newMat = copy.deepcopy(mat)
     placeDomino(row, col, newMat, playerOnMove)
     return newMat
+    
+#optimizacija treba
+def get_last_move(matrix):
+  last_move_number = 0
+  last_move_coords = (0, 0)
+  for i in range(len(matrix)):
+    for j in range(len(matrix[0])):
+      if matrix[i][j][1] > last_move_number and matrix[i][j][0] > 0:
+        last_move_number = matrix[i][j][1]
+        last_move_coords = (i, j)
+  return last_move_coords
+
+#-----------------------------------------------SORT/PRUNE----------------------------------------------------------------
+
+def sortMatricesByBoardState(matrices, playerOnMove):
+    if playerOnMove == 1: #player 1 ie. descending boardState
+        return sorted(matrices, key=lambda matrix: not getBoardStateOptimized(matrix, playerOnMove))
+    #player 2 ie. ascending boardState
+    return sorted(matrices, key=lambda matrix: getBoardStateOptimized(matrix, playerOnMove))
+
+def sortAndPruneMatricesByBoardState(matrices, playerOnMove):
+    newMatrices = []
+    bestMatrix = []
+
+    if playerOnMove == 1:
+        bestState = -float("inf")
+        for matrix in matrices:
+            state = getBoardStateOptimized(matrix, playerOnMove)
+            if state > bestState:
+                bestMatrix = matrix
+                bestState = state
+            if state > -0.5:
+                newMatrices.append(matrix)
+    else:
+        bestState = float("inf")
+        for matrix in matrices:
+            state = getBoardStateOptimized(matrix, playerOnMove)
+            if state < bestState:
+                bestMatrix = matrix
+                bestState = state
+            if state < 0.5:
+                newMatrices.append(matrix)
+    
+    if len(newMatrices) == 0:
+        newMatrices.append(bestMatrix)
+    return sortMatricesByBoardState(newMatrices, playerOnMove)
 
 
 
