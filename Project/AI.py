@@ -18,12 +18,13 @@ def getNextMoveMinMax(matrix, depth, playerOnMove):
     
     availableMovesMatrices = Engine.getAvailableMovesMatrices(matrix, playerOnMove)
     newCount = len(availableMovesMatrices)
-    if newCount > 1:
+    if newCount > PRUNING_THRESHOLD:
         availableMovesMatrices = Engine.sortAndPruneMatricesByBoardState(availableMovesMatrices, playerOnMove)
         newCount = len(availableMovesMatrices)
     
     count = len(availableMovesMatrices)
     print("available moves left :", count)
+    print("search depth:", depth)
     for moveMatrix in availableMovesMatrices:
 
         #time restriction
@@ -60,15 +61,14 @@ def min_maxWithAlphaBeta(matrix, depth, alpha, beta, playerOnMove, count):
     if count == 1 or depth == 0:
         return Engine.getBoardStateOptimized(matrix, playerOnMove)
 
+    availableMovesMatrices = Engine.getAvailableMovesMatrices(matrix, playerOnMove)
+    newCount = len(availableMovesMatrices)
+    if newCount > PRUNING_THRESHOLD:
+        availableMovesMatrices = Engine.sortAndPruneMatricesByBoardState(availableMovesMatrices, playerOnMove)
+        newCount = len(availableMovesMatrices)
+
     if playerOnMove == 1:
         max_val = -float("inf")
-        availableMovesMatrices = Engine.getAvailableMovesMatrices(matrix, playerOnMove)
-
-        newCount = len(availableMovesMatrices)
-        if newCount>1:
-            availableMovesMatrices = Engine.sortAndPruneMatricesByBoardState(availableMovesMatrices, playerOnMove)
-            newCount = len(availableMovesMatrices)
-
         for moveMatrix in availableMovesMatrices:
             val = min_maxWithAlphaBeta(moveMatrix, depth - 1, alpha, beta, Engine.getNextPlayer(playerOnMove), newCount)
             max_val = max(max_val, val)
@@ -80,13 +80,6 @@ def min_maxWithAlphaBeta(matrix, depth, alpha, beta, playerOnMove, count):
 
     else:
         min_val = float("inf")
-        availableMovesMatrices = Engine.getAvailableMovesMatrices(matrix, playerOnMove)
-
-        newCount = len(availableMovesMatrices)
-        if newCount>1:
-            availableMovesMatrices = Engine.sortAndPruneMatricesByBoardState(availableMovesMatrices, playerOnMove)
-            newCount = len(availableMovesMatrices)
-
         for moveMatrix in availableMovesMatrices:
             val = min_maxWithAlphaBeta(moveMatrix, depth - 1, alpha, beta, Engine.getNextPlayer(playerOnMove), newCount)
             min_val = min(min_val, val)

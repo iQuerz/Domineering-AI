@@ -1,7 +1,8 @@
 import sys
 
-ROWS = COLS = 8 #default values
-AI_TURN = 0 #0=Human-v-Human, 1=prvi igra AI, 2=drugi igra AI
+ROWS = 8 #default values
+COLS = 8
+AI_TURN = 0 #0=pvp, 1=prvi igra AI, 2=drugi igra AI
 
 #fetch from args
 length = len(sys.argv)
@@ -25,8 +26,6 @@ WIDTH = COLS * 70
 HEIGHT = ROWS * 70
 SQSIZE = WIDTH // COLS #square size
 
-AI_DEPTH = 120 - AI_TURN
-
 TIME_LIMIT_SECONDS = 28 #value - 1
 
 P1_WIN_VALUE = 100
@@ -34,3 +33,19 @@ P2_WIN_VALUE = -100
 
 ALPHA_START = -float("inf")
 BETA_START = float("inf")
+
+SORT_PRUNE_VAL = 0 #sto blize nuli to je pruning ostriji. theoretical max za value je 16, ali je 99% poteza u okviru 0-1
+PRUNING_THRESHOLD = 14 #ako ima vise od ovoliko poteza mogucih, try to prune (ako je mali broj ne kosta nas nista da za sv. slucaj prodjemo sve slucajeve)
+#IDEALLY ovo gornje je onk fine tuned na dobar value a ovo dole je 1 (mora da bude preko 0)
+
+START_DEPTH = 4 - AI_TURN #self explainatory
+
+def getDepth(countMove):
+    depth = START_DEPTH
+    if(countMove>9):
+        depth+=2
+    if(countMove>11):
+        depth+=2
+    if(countMove>15):
+        depth+=2
+    return depth

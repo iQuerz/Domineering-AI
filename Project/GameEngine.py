@@ -74,12 +74,12 @@ def getBoardStateOptimized(matrix, playerOnMove):
     player1_moves = 0
     player2_moves = 0
     total_moves = 0
-    for row in range(len(matrix)):
-        for col in range(len(matrix[row])):
+    for row in range(ROWS):
+        for col in range(COLS):
             if isMoveValid(row, col, matrix, 1):
                 player1_moves += 1
                 total_moves += 1
-            elif isMoveValid(row, col, matrix, 2):
+            if isMoveValid(row, col, matrix, 2):
                 player2_moves += 1
                 total_moves += 1
     
@@ -142,7 +142,7 @@ def sortAndPruneMatricesByBoardState(matrices, playerOnMove):
             if state > bestState:
                 bestMatrix = matrix
                 bestState = state
-            if state > -0.5:
+            if state > -SORT_PRUNE_VAL:
                 newMatrices.append(matrix)
     else:
         bestState = float("inf")
@@ -151,11 +151,12 @@ def sortAndPruneMatricesByBoardState(matrices, playerOnMove):
             if state < bestState:
                 bestMatrix = matrix
                 bestState = state
-            if state < 0.5:
+            if state < SORT_PRUNE_VAL:
                 newMatrices.append(matrix)
     
     if len(newMatrices) == 0:
         newMatrices.append(bestMatrix)
+    
     return sortMatricesByBoardState(newMatrices, playerOnMove)
 
 
