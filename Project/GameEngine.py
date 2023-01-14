@@ -42,22 +42,22 @@ def getAvailableMovesNumber(mat, playerOnMove): #use for checking if the active 
     return counter
 
 def getAvailableMovesNumberOptimized(mat, playerOnMove):
-    counterPlayerOne = 0
-    counterPlayerTwo = 0
+    currentPlayerCounter = 0
+    oponentPlayerCounter = 0
     for row in range(ROWS):
         for col in range(COLS):
             if isMoveValid(row, col, mat, playerOnMove):
-                counterPlayerOne+=1
+                currentPlayerCounter+=1
             if isMoveValid(row, col, mat, getNextPlayer(playerOnMove)):
-                counterPlayerTwo+=1
-    return (counterPlayerOne,counterPlayerTwo)
+                oponentPlayerCounter+=1
+    return (currentPlayerCounter, oponentPlayerCounter)
 
 def getBoardStateOptimized(matrix, playerOnMove):
     movesLeft = getAvailableMovesNumberOptimized(matrix, playerOnMove)
     moveDiff = 1*movesLeft[0] - 0.9*movesLeft[1] #movesLeft[0] for player 1  &  movesLeft[1] for player 2
 
-    if movesLeft[0] == 0:   return -100
-    elif movesLeft[1] == 0: return 100
+    if movesLeft[0] == 0:   return P2_WIN_VALUE
+    elif movesLeft[1] == 0: return P1_WIN_VALUE
     else:                   return moveDiff
 
 #optimizacija treba

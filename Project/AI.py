@@ -33,7 +33,7 @@ def getNextMoveMinMax(matrix, depth, playerOnMove):
                 bestMoveValue = val
                 bestMoveMatrix = moveMatrix
                 print("picked :" , bestMoveValue)
-                if bestMoveValue == 100:
+                if bestMoveValue == P1_WIN_VALUE:
                     return Engine.get_last_move(bestMoveMatrix)
 
         elif AI_TURN == 2:
@@ -41,7 +41,7 @@ def getNextMoveMinMax(matrix, depth, playerOnMove):
                 bestMoveValue = val
                 bestMoveMatrix = moveMatrix
                 print("picked :" , bestMoveValue)
-                if bestMoveValue == -100:
+                if bestMoveValue == P2_WIN_VALUE:
                     return Engine.get_last_move(bestMoveMatrix)
     return Engine.get_last_move(bestMoveMatrix)
 
@@ -59,8 +59,8 @@ def min_maxWithAlphaBeta(matrix, depth, alpha, beta, playerOnMove, count):
         max_val = -float("inf")
         availableMovesMatrices = Engine.getAvailableMovesMatrices(matrix, playerOnMove)
         newCount = len(availableMovesMatrices)
-        if(newCount==0): #this means that the player will lose
-            return -100
+        if(newCount==0):
+            return P2_WIN_VALUE
         for moveMatrix in availableMovesMatrices:
             val = min_maxWithAlphaBeta(moveMatrix, depth - 1, alpha, beta, Engine.getNextPlayer(playerOnMove), newCount)
             max_val = max(max_val, val)
@@ -74,8 +74,8 @@ def min_maxWithAlphaBeta(matrix, depth, alpha, beta, playerOnMove, count):
         min_val = float("inf")
         availableMovesMatrices = Engine.getAvailableMovesMatrices(matrix, playerOnMove)
         newCount = len(availableMovesMatrices)
-        if(newCount==0): #this means that the player will lose
-            return 100
+        if(newCount==0):
+            return P1_WIN_VALUE
         for moveMatrix in availableMovesMatrices:
             val = min_maxWithAlphaBeta(moveMatrix, depth - 1, alpha, beta, Engine.getNextPlayer(playerOnMove), newCount)
             min_val = min(min_val, val)
