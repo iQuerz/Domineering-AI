@@ -52,13 +52,15 @@ def min_maxWithAlphaBeta(matrix, depth, alpha, beta, playerOnMove, count):
     if key in transposition_table:
         return transposition_table[key]
 
-    if count ==0 or depth==0:
+    if count == 0 or depth == 0:
         return Engine.getBoardStateOptimized(matrix, playerOnMove)
 
     if playerOnMove == 1:
         max_val = -float("inf")
         availableMovesMatrices = Engine.getAvailableMovesMatrices(matrix, playerOnMove)
         newCount = len(availableMovesMatrices)
+        if(newCount==0): #this means that the player will lose
+            return -100
         for moveMatrix in availableMovesMatrices:
             val = min_maxWithAlphaBeta(moveMatrix, depth - 1, alpha, beta, Engine.getNextPlayer(playerOnMove), newCount)
             max_val = max(max_val, val)
@@ -72,6 +74,8 @@ def min_maxWithAlphaBeta(matrix, depth, alpha, beta, playerOnMove, count):
         min_val = float("inf")
         availableMovesMatrices = Engine.getAvailableMovesMatrices(matrix, playerOnMove)
         newCount = len(availableMovesMatrices)
+        if(newCount==0): #this means that the player will lose
+            return 100
         for moveMatrix in availableMovesMatrices:
             val = min_maxWithAlphaBeta(moveMatrix, depth - 1, alpha, beta, Engine.getNextPlayer(playerOnMove), newCount)
             min_val = min(min_val, val)

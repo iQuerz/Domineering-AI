@@ -26,4 +26,4 @@ HEIGHT = ROWS * 70
 SQSIZE = WIDTH // COLS #square size
 
 AI_DEPTH = 2 + AI_TURN
-TIME_LIMIT_SECONDS = 29 #value - 1
+TIME_LIMIT_SECONDS = 28 #value - 1
