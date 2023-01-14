@@ -41,7 +41,14 @@ def mainLoop():
         #AI turn
         if playerOnMove == AI_TURN:
             start = time.time()
-            aiTurn = AI.getNextMoveMinMax(Field, AI_DEPTH, playerOnMove)
+
+            depth = AI_DEPTH
+            if(Engine.CountMove>13):
+                depth+=2
+            if(Engine.CountMove>20):
+                depth+=2
+            aiTurn = AI.getNextMoveMinMax(Field, depth, playerOnMove)
+            
             end = time.time()
             print("time needed for AI turn: ", end - start, "s")
             newMoveRow = aiTurn[0]
