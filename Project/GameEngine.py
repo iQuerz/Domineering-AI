@@ -52,24 +52,6 @@ def getAvailableMovesNumberOptimized(mat, playerOnMove):
                 player2Counter+=1
     return (player1Counter, player2Counter)
 
-def getBoardStateOptimized1(matrix, playerOnMove):
-    player1Counter = 0
-    player2Counter = 0
-    for row in range(ROWS):
-        for col in range(COLS):
-            if isMoveValid(row, col, matrix, 1):
-                player1Counter+=1
-            if isMoveValid(row, col, matrix, 2):
-                player2Counter+=1
-
-    moveDiff = player1Counter - (player2Counter-1)
-    if playerOnMove == 2:
-        moveDiff = (player1Counter-1) - player2Counter
-
-    if player1Counter == 0:   return P2_WIN_VALUE
-    elif player2Counter == 0: return P1_WIN_VALUE
-    else:                   return moveDiff
-
 def getBoardStateOptimized(matrix, playerOnMove):
     player1_moves = 0
     player2_moves = 0
